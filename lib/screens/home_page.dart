@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/models/items_data.dart';
+import 'package:to_do_app/screens/item_adder.dart';
+import 'package:to_do_app/widgets/item_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,7 +25,7 @@ class HomePage extends StatelessWidget {
                 child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                '5 Items',
+                "${Provider.of<ItemData>(context).items.length} Items",
                 style: Theme.of(context).textTheme.headline3,
               ),
             )),
@@ -31,6 +35,28 @@ class HomePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ListView.builder(
+                    itemCount: Provider.of<ItemData>(context).items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ItemCard(
+                          title:
+                              Provider.of<ItemData>(context).items[index].title,
+                          isDone: Provider.of<ItemData>(context)
+                              .items[index]
+                              .isDone,
+                          toggleStatus: (bool) {
+                            Provider.of<ItemData>(context, listen: false)
+                                .toggletatus(index);
+                          },
+                          deleteItem: (_) {
+                            Provider.of<ItemData>(context, listen: false)
+                                .deleteItem(index);
+                          });
+                    },
+                  ),
+                ),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(50))),
@@ -40,7 +66,13 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
+              context: context,
+              builder: (context) => ItemAdder());
+        },
         child: Icon(Icons.add),
       ),
     );
