@@ -19,7 +19,7 @@ class ItemCard extends StatelessWidget {
       onDismissed: deleteItem,
       child: Card(
         color: isDone
-            ? Theme.of(context).accentColor
+            ? Theme.of(context).splashColor
             : Theme.of(context).primaryColor,
         elevation: isDone ? 1 : 5,
         shadowColor: Theme.of(context).primaryColor,
@@ -28,9 +28,10 @@ class ItemCard extends StatelessWidget {
           title: Text(
             title,
             style: TextStyle(
-                color: Colors.black,
+                //color: Theme.of(context).primaryTextTheme.bodyText1,
                 fontWeight: FontWeight.bold,
-                decoration: isDone ? TextDecoration.lineThrough : null),
+                decoration: isDone ? TextDecoration.lineThrough : null,
+                color: isDone ? Colors.white : Colors.green),
           ),
           trailing: Checkbox(
             onChanged: toggleStatus,

@@ -27,7 +27,10 @@ class HomePage extends StatelessWidget {
             context: context,
             builder: (context) => ItemAdder());
       },
-      child: Icon(Icons.add),
+      child: Icon(
+        Icons.add,
+        color: Theme.of(context).buttonColor,
+      ),
     );
   }
 
@@ -35,21 +38,11 @@ class HomePage extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 1,
-          child: Container(
-              child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              "${Provider.of<ItemData>(context).items.length} Items",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          )),
-        ),
-        Expanded(
           flex: 5,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
+              // color: Colors.transparent,
               child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Consumer<ItemData>(
@@ -74,7 +67,7 @@ class HomePage extends StatelessWidget {
                     ),
                   )),
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.blueGrey[50],
                   borderRadius: BorderRadius.all(Radius.circular(50))),
             ),
           ),
@@ -87,7 +80,7 @@ class HomePage extends StatelessWidget {
     return AppBar(
       actions: [
         IconButton(
-          icon: Icon(Icons.settings),
+          icon: Icon(Icons.settings, color: Theme.of(context).buttonColor),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SettingsPage()));
@@ -95,7 +88,8 @@ class HomePage extends StatelessWidget {
         )
       ],
       title: Text(
-        'Get It Done',
+        'TO DO',
+        style: Theme.of(context).textTheme.headline6,
       ),
       centerTitle: true,
     );

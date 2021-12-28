@@ -7,7 +7,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Tema Seçimi Yapınız.'),
+          leading: BackButton(color: IconTheme.of(context).color),
+          title: Text(
+            'Tema Seçimi Yapınız.',
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SwitchCard());
@@ -24,12 +28,12 @@ class _SwitchCardState extends State<SwitchCard> {
   @override
   Widget build(BuildContext context) {
     Text greenText = Text(
-      'Green',
-      style: TextStyle(color: Theme.of(context).primaryColor),
+      'Light',
+      style: TextStyle(color: Colors.green),
     );
     Text redText = Text(
-      'Red',
-      style: TextStyle(color: Colors.red),
+      'Dark',
+      style: TextStyle(color: Colors.green),
     );
     return Card(
       child: SwitchListTile(
