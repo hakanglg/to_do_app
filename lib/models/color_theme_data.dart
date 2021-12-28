@@ -9,7 +9,9 @@ class ColorThemeData with ChangeNotifier {
       primarySwatch: Colors.green,
       primaryColor: Colors.green,
       scaffoldBackgroundColor: Colors.green,
-      accentColor: Colors.green,
+      accentColor: Colors.green.shade100,
+      floatingActionButtonTheme:
+          FloatingActionButtonThemeData(backgroundColor: Colors.green),
       appBarTheme: AppBarTheme(color: Colors.green));
 
   final ThemeData redTheme = ThemeData(
@@ -20,7 +22,9 @@ class ColorThemeData with ChangeNotifier {
       primarySwatch: Colors.red,
       primaryColor: Colors.red,
       scaffoldBackgroundColor: Colors.red,
-      accentColor: Colors.red,
+      accentColor: Colors.red.shade100,
+      floatingActionButtonTheme:
+          FloatingActionButtonThemeData(backgroundColor: Colors.red),
       appBarTheme: AppBarTheme(color: Colors.red));
 
   ThemeData _selectedThemeData = ThemeData(

@@ -18,7 +18,9 @@ class ItemCard extends StatelessWidget {
       key: Key(title),
       onDismissed: deleteItem,
       child: Card(
-        color: isDone ? Colors.green.shade50 : Colors.green.shade200,
+        color: isDone
+            ? Theme.of(context).accentColor
+            : Theme.of(context).primaryColor,
         elevation: isDone ? 1 : 5,
         shadowColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

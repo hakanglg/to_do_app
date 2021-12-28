@@ -12,79 +12,92 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()));
-            },
-          )
-        ],
-        title: Text(
-          'Get It Done',
-        ),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-                child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                "${Provider.of<ItemData>(context).items.length} Items",
-                style: Theme.of(context).textTheme.headline3,
-              ),
-            )),
-          ),
-          Expanded(
-            flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ListView.builder(
-                    itemCount: Provider.of<ItemData>(context).items.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ItemCard(
-                          title:
-                              Provider.of<ItemData>(context).items[index].title,
-                          isDone: Provider.of<ItemData>(context)
-                              .items[index]
-                              .isDone,
-                          toggleStatus: (bool) {
-                            Provider.of<ItemData>(context, listen: false)
-                                .toggletatus(index);
-                          },
-                          deleteItem: (_) {
-                            Provider.of<ItemData>(context, listen: false)
-                                .deleteItem(index);
-                          });
-                    },
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(50))),
-              ),
+      appBar: buildAppBar(context),
+      body: bodyPage(context),
+      floatingActionButton: buildFAB(context),
+    );
+  }
+
+  FloatingActionButton buildFAB(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        showModalBottomSheet(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            context: context,
+            builder: (context) => ItemAdder());
+      },
+      child: Icon(Icons.add),
+    );
+  }
+
+  Column bodyPage(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Container(
+              child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              "${Provider.of<ItemData>(context).items.length} Items",
+              style: Theme.of(context).textTheme.headline3,
             ),
-          )
-        ],
+          )),
+        ),
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Consumer<ItemData>(
+                    builder: (context, itemData, child) => Align(
+                      alignment: Alignment.topCenter,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        reverse: true,
+                        itemCount: Provider.of<ItemData>(context).items.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ItemCard(
+                              title: itemData.items[index].title,
+                              isDone: itemData.items[index].isDone,
+                              toggleStatus: (bool) {
+                                itemData.toggletatus(index);
+                              },
+                              deleteItem: (_) {
+                                itemData.deleteItem(index);
+                              });
+                        },
+                      ),
+                    ),
+                  )),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      actions: [
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingsPage()));
+          },
+        )
+      ],
+      title: Text(
+        'Get It Done',
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)),
-              context: context,
-              builder: (context) => ItemAdder());
-        },
-        child: Icon(Icons.add),
-      ),
+      centerTitle: true,
     );
   }
 }
