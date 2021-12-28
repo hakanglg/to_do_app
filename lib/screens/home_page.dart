@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/items_data.dart';
 import 'package:to_do_app/screens/item_adder.dart';
+import 'package:to_do_app/screens/settings_page.dart';
 import 'package:to_do_app/widgets/item_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,6 +13,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()));
+            },
+          )
+        ],
         title: Text(
           'Get It Done',
         ),
